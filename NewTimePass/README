@@ -1,0 +1,115 @@
+the descriptions:	
+	It's a library about shared memory called "TimePass".It imitate the stl and redis and has these containers (array, list ,doubly_list, queue, set, multiset, hashset, hashmulitset, map, multimap, hashmap, hashmultimap).
+
+the directorys:
+|-- automake.sh
+|-- clean.sh
+|-- example
+|   |-- array
+|   |   |-- array.cpp
+|   |   `-- CMakeLists.txt
+|   |-- CMakeLists.txt
+|   |-- doublylist
+|   |   |-- CMakeLists.txt
+|   |   `-- doublylist.cpp
+|   |-- hashlist
+|   |   |-- CMakeLists.txt
+|   |   `-- hashlist.cpp
+|   |-- hashmap
+|   |   |-- CMakeLists.txt
+|   |   `-- hashmap.cpp
+|   |-- hashset
+|   |   |-- CMakeLists.txt
+|   |   `-- hashset.cpp
+|   |-- list
+|   |   |-- CMakeLists.txt
+|   |   `-- list.cpp
+|   |-- map
+|   |   |-- CMakeLists.txt
+|   |   `-- map.cpp
+|   |-- multihashmap
+|   |   |-- CMakeLists.txt
+|   |   `-- multihashmap.cpp
+|   |-- multihashset
+|   |   |-- CMakeLists.txt
+|   |   `-- multihashset.cpp
+|   |-- multimap
+|   |   |-- CMakeLists.txt
+|   |   `-- multimap.cpp
+|   |-- multiset
+|   |   |-- CMakeLists.txt
+|   |   `-- multiset.cpp
+|   |-- queue
+|   |   |-- CMakeLists.txt
+|   |   `-- queue.cpp
+|   `-- set
+|       |-- CMakeLists.txt
+|       `-- set.cpp
+`-- src
+    |-- CMakeLists.txt
+    |-- global
+    |   |-- CMakeLists.txt
+    |   |-- include
+    |   |   `-- error.h
+    |   `-- src
+    |       `-- error.cpp
+    `-- shm
+        |-- CMakeLists.txt
+        |-- include
+        |   |-- common_list.h
+        |   |-- shm_array.h
+        |   |-- shm_base.h
+        |   |-- shm_config.h
+        |   |-- shm_doublylist.h
+        |   |-- shm_hash.h
+        |   |-- shm_hashlist.h
+        |   |-- shm_hashmap.h
+        |   |-- shm_hashrbtree.h
+        |   |-- shm_hashset.h
+        |   |-- shm_list.h
+        |   |-- shm_macro.h
+        |   |-- shm_map.h
+        |   |-- shm_multihashmap.h
+        |   |-- shm_multihashset.h
+        |   |-- shm_multimap.h
+        |   |-- shm_multiset.h
+        |   |-- shm_queue.h
+        |   |-- shm_rbtree.h
+        |   `-- shm_set.h
+        `-- src
+            `-- shm_base.cpp
+	/example: this directory has all the test examples of all containers.
+	/src:	  this directory has all the containers
+	/automake.sh: make and install shell, it's very convenient.
+	/clean.sh	remove the cmake and install files.
+
+the library's requires:
+	1. CMAKE 2.6 above: 
+	you can make the project as below(you must have gone into the project's root directory):
+		cd src
+		mkdir build
+		cd build
+		cmake ..
+		make && make install
+	the libs and includes are installed into the /usr/local/TIME_PASS
+
+	you can make the examples as below:
+		cd example
+		mkdir build
+		cd build
+		cmake ..
+		make && make install
+	the excutable files are installde into exaple/bin
+
+	2.if you want to make project easily, you can execute as below:
+		sh automake.sh
+	the shell code is strictly passed in bash.
+
+	3.the shared memory is based on posix shared memory apis. so it's used in most of linux and unix operating system, but not windows.
+	
+	4. if you want to run the example with '-r' argument, you should intall the graphviz. because the comman is used to convert the data structure into pictures with the dot language.
+
+the copyleft:
+	The code is protected by BSD LINENCE. You can't use it in commercial activicties directly.
+	
+ 
