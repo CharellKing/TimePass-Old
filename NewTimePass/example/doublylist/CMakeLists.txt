@@ -1,0 +1,17 @@
+AUX_SOURCE_DIRECTORY(. SRC)
+ADD_EXECUTABLE(doublylist ${SRC})
+
+IF (GLOBAL AND SHM)
+	MESSAGE("global:"${GLOBAL})
+	MESSAGE("shm:"${SHM})
+	TARGET_LINK_LIBRARIES(doublylist ${GLOBAL} ${SHM})
+	INSTALL(TARGETS doublylist RUNTIME DESTINATION ${TIME_PASS_BASE}/example/bin)
+ELSE (GLOBAL AND SHM)
+	IF (NOT GLOBAL)
+		MESSAGE("can't find libglobal.so")
+	ENDIF (NOT GLOBAL)
+
+	IF (NOT SHM)
+		MESSAGE("can't find libshm.so")
+	ENDIF (NOT SHM)
+ENDIF (GLOBAL AND SHM)
