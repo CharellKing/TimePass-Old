@@ -288,6 +288,20 @@ public:
 		out.close();
 		return true;
 	}    
+
+
+	off_t TotalSize() const {
+		return sizeof(HashlistHead) + sizeof(EXTEND) + sizeof(ListBucket) * p_head_->bucket_size + sizeof(ListNode<T>) * p_head_->capacity;	
+	}
+	
+	off_t UsedSize() const {
+		return sizeof(HashlistHead) + sizeof(EXTEND) + sizeof(ListBucket) * p_head_->bucket_size + sizeof(ListNode<T>) * p_head_->size;			
+	}
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
 private:
 
     //用dot language画一个垂直数组

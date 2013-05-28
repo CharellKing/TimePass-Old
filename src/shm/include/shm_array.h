@@ -119,18 +119,18 @@ public:
 
 	//在共享内存的尾部压入元素
 	bool PushBack(const T& elem) {
-        if (p_head_->size >= p_head_->capacity) {//空间不足扩展
-            off_t expand_size = ShmConfig::ExpandSize(p_head_->size);
-            if (expand_size <= 0) {
-                return false;
-            }
-            bool ret = ShmBase::Resize(name_, TotalSize() + expand_size * sizeof(T));
-            if (true == ret) {
-                p_head_->capacity += expand_size;
-            } else {
-                return false;
-            }
-        }
+		if (p_head_->size >= p_head_->capacity) {//空间不足扩展
+		    	off_t expand_size = ShmConfig::ExpandSize(p_head_->size);
+		    	if (expand_size <= 0) {
+		        return false;
+		    	}
+			bool ret = ShmBase::Resize(name_, TotalSize() + expand_size * sizeof(T));
+		    	if (true == ret) {
+		    	    p_head_->capacity += expand_size;
+		    	} else {
+		     	return false;
+		    	}
+		}
         
 		*(p_addr_ + p_head_->size) = elem;
 		++ p_head_->size;
@@ -223,16 +223,6 @@ public:
 		out.close();
 		return true;
 	}
-
-    //空间的总size
-    off_t TotalSize()const{
-        return sizeof(ArrayHead) + sizeof(EXTEND) + sizeof(T) * p_head_->capacity;
-    }
-    
-    //使用空间
-    off_t UsedSize()const{
-        return sizeof(ArrayHead) + sizeof(EXTEND) + sizeof(T)* p_head_->size;
-    }
     
     //内存优化
     bool Optimize(){
@@ -248,7 +238,21 @@ public:
         }
         return false;
     }
-
+	
+    //空间的总size
+    off_t TotalSize()const{
+        return sizeof(ArrayHead) + sizeof(EXTEND) + sizeof(T) * p_head_->capacity;
+    }
+    
+    //使用空间
+    off_t UsedSize()const{
+        return sizeof(ArrayHead) + sizeof(EXTEND) + sizeof(T)* p_head_->size;
+    }
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
 private:
 	char name_[256];
 	ArrayHead* p_head_;

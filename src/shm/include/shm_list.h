@@ -198,6 +198,11 @@ public:
     bool Optimize(){
         return CommonList<T, EXTEND>::Optimize(name_, p_addr_, p_head_);
     }
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
 private:
     char name_[256];
     ListHead* p_head_;

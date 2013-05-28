@@ -180,16 +180,6 @@ public:
         return ShmRbtree<T, Compare, EXTEND>::Count(p_addr_, p_head_->root, data);
     }
     
-    //共享内存总占用空间
-    off_t TotalSize()const {
-        return sizeof(RbtreeHead) + sizeof(EXTEND) + p_head_->capacity * sizeof(RbtreeNode<T>);
-    }
-    
-    //共享内存已经占用的空间
-    off_t UsedSize()const {
-        return sizeof(RbtreeHead) + sizeof(EXTEND) + p_head_->size * sizeof(RbtreeNode<T>);
-    }
-    
     bool Optimize() {
         return ShmRbtree<T, Compare, EXTEND>::Optimize(name_, p_addr_, p_head_);        
     }
@@ -199,6 +189,19 @@ public:
         return ShmRbtree<T, Compare, EXTEND>::ToDot(p_head_, p_addr_, filename, Label);
     }
 
+	off_t TotalSize() const {
+		return sizeof(RbtreeHead) + sizeof(EXTEND) + sizeof(RbtreeNode<T>) * p_head_->capacity;	
+	}
+	
+	off_t UsedSize() const {
+		return sizeof(RbtreeHead) + sizeof(EXTEND) + sizeof(RbtreeNode<T>) * p_head_->size;				
+	}
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
+    
 private:
     char name_[256];
     RbtreeHead* p_head_;

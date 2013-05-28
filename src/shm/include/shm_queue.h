@@ -178,6 +178,21 @@ public:
 		return true;
 	}
 
+    //空间的总size
+    off_t TotalSize()const{
+        return sizeof(QueueHead) + sizeof(EXTEND) + sizeof(T) * p_head_->capacity;
+    }
+    
+    //使用空间
+    off_t UsedSize()const{
+        return sizeof(QueueHead) + sizeof(EXTEND) + sizeof(T)* p_head_->size;
+    }
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
+	
 private:
     char name_[256];
     QueueHead* p_head_;

@@ -141,6 +141,20 @@ public:
     bool ToDot(const std::string& filename, const std::string (*Label)(const MAP_DATA& data)) const {
         return MAP_TREE::ToDot(p_head_, p_bucket_, p_addr_, filename, Label);
     }
+
+	off_t TotalSize() const {
+		return sizeof(HashrbtreeHead) + sizeof(EXTEND) + sizeof(Bucket) * p_head_->bucket_size + sizeof(MAP_NODE) * p_head_->capacity;	
+	}
+	
+	off_t UsedSize() const {
+		return sizeof(HashrbtreeHead) + sizeof(EXTEND) + sizeof(Bucket) * p_head_->bucket_size + sizeof(MAP_NODE) * p_head_->size;			
+	}
+	
+	//提交共享内存所作的改变
+	bool Commit(bool is_sync) {
+		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+	}
+    
 private:
     char name_[256];
     HashrbtreeHead* p_head_;
