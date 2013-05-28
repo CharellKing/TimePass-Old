@@ -1,5 +1,5 @@
 the descriptions:	
-	It's a library about shared memory called "TimePass".It imitate the stl and redis and has these containers (array, list ,doubly_list, queue, set, multiset, hashset, hashmulitset, map, multimap, hashmap, hashmultimap).
+	It's a library about shared memory called "TimePass".It imitate the stl and redis and has these containers (array, list ,doubly_list, queue, set, multiset, hashset, multihashset, map, multimap, hashmap, multihashmap).
 
 the directorys:
 |-- automake.sh
