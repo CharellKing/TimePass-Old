@@ -51,7 +51,7 @@ struct ShmConfig {
 
 //设置的时候, max_capacity远远大于max_expand
 off_t ShmConfig::max_expand = 1 << 10;      //一次最大扩展
-off_t ShmConfig::min_reduce = 2/*1 << 10*/;     //一次最小缩减 
+off_t ShmConfig::min_reduce = 1 << 10;      //一次最小缩减 
 off_t ShmConfig::default_size = 1 << 10;    //默认容器的size  
 off_t ShmConfig::max_capacity = 1 << 30;    //最大容量
 
