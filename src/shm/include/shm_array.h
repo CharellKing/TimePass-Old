@@ -57,10 +57,10 @@ public:
 		return true;
 	}
 
-    //卸载共享内存
-    bool DetachShm() {
-        return ShmBase::DetachShm((char*)p_head_, TotalSize());
-    }
+	//卸载共享内存
+	bool DetachShm() {
+		return ShmBase::DetachShm((char*)p_head_, TotalSize());
+	}	
     
 	//销毁共享内存
 	bool DestroyShm() {
@@ -120,16 +120,16 @@ public:
 	//在共享内存的尾部压入元素
 	bool PushBack(const T& elem) {
 		if (p_head_->size >= p_head_->capacity) {//空间不足扩展
-		    	off_t expand_size = ShmConfig::ExpandSize(p_head_->size);
-		    	if (expand_size <= 0) {
-		        return false;
-		    	}
+			off_t expand_size = ShmConfig::ExpandSize(p_head_->size);
+			if (expand_size <= 0) {
+				return false;
+			}
 			bool ret = ShmBase::Resize(name_, TotalSize() + expand_size * sizeof(T));
-		    	if (true == ret) {
-		    	    p_head_->capacity += expand_size;
-		    	} else {
-		     	return false;
-		    	}
+			if (true == ret) {
+				p_head_->capacity += expand_size;
+			} else {
+				return false;
+			}
 		}
         
 		*(p_addr_ + p_head_->size) = elem;

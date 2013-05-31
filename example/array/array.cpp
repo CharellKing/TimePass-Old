@@ -40,7 +40,7 @@ void Create(off_t len) {
 	TimePass::ShmArray<int> numbers("/tmp/array");
 	if (false == numbers.CreateShm(len)) {
 		printf("errno = %d, errmsg = %s\n", TimePass::Error::GetLastErrno(), TimePass::Error::GetLastErrmsg());
-		return false;
+		return ;
 	}
 	
 	numbers.DetachShm();
