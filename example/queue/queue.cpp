@@ -40,7 +40,9 @@ void Create(off_t len) {
 	TimePass::ShmQueue<int> numbers("/tmp/queue");
 	if (false == numbers.CreateShm(len)) {
 		printf("errno = %d, errmsg = %s\n", TimePass::Error::GetLastErrno(), TimePass::Error::GetLastErrmsg());
+		return ;
 	}
+	numbers.DetachShm();
 }
 
 void Destroy() {
@@ -81,6 +83,7 @@ void Write() {
             }
         }
 	}
+	numbers.DetachShm();	
 }
 
 void Show() {
@@ -90,7 +93,8 @@ void Show() {
 			TimePass::Error::GetLastErrmsg());
 		return ;
 	}
-	ToDotPs("queue", &numbers);	
+	ToDotPs("queue", &numbers);
+	numbers.DetachShm();
 }
 
 void Clear() {
@@ -101,6 +105,7 @@ void Clear() {
 		return ;
 	}
 	numbers.Clear();
+	numbers.DetachShm();
 }
 
 int main(int argc, char** argv) {
