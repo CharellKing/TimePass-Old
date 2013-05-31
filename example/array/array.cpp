@@ -40,7 +40,10 @@ void Create(off_t len) {
 	TimePass::ShmArray<int> numbers("/tmp/array");
 	if (false == numbers.CreateShm(len)) {
 		printf("errno = %d, errmsg = %s\n", TimePass::Error::GetLastErrno(), TimePass::Error::GetLastErrmsg());
+		return false;
 	}
+	
+	numbers.DetachShm();
 }
 
 void Destroy() {
@@ -83,6 +86,7 @@ void Write() {
 		printf("%d ", number);
 	}
 	printf("共插入数据的条数%d\n", count);
+	numbers.DetachShm();
 }
 
 void Remove() {
@@ -116,6 +120,7 @@ void Remove() {
 		}
 	}
 	printf("共插入删除的条数%d\n", count);
+	numbers.DetachShm();
 }
 
 void Read() {
@@ -129,6 +134,7 @@ void Read() {
 		printf("%d ", *numbers.At(i));
 	}
 	printf("\n");
+	numbers.DetachShm();
 }
 
 void Show() {
@@ -138,7 +144,8 @@ void Show() {
 			TimePass::Error::GetLastErrmsg());
 		return ;
 	}
-	ToDotPs("array", &numbers);	
+	ToDotPs("array", &numbers);
+	numbers.DetachShm();
 }
 
 void Clear() {
@@ -149,6 +156,7 @@ void Clear() {
 		return ;
 	}
 	numbers.Clear();
+	numbers.DetachShm();
 }
 
 void About() {
@@ -158,7 +166,8 @@ void About() {
 			TimePass::Error::GetLastErrmsg());
 		return ;
 	}
-    cout << "name = " << numbers.Name() << " capacity = " << numbers.Capacity() << " size = " << numbers.Size() << " total_size = " << numbers.TotalSize() << "bytes used_size = " << numbers.UsedSize() << "byts" << endl;
+    	cout << "name = " << numbers.Name() << " capacity = " << numbers.Capacity() << " size = " << numbers.Size() << " total_size = " << numbers.TotalSize() << "bytes used_size = " << numbers.UsedSize() << "byts" << endl;
+	numbers.DetachShm();
 }
 
 void Optimize() {
@@ -168,11 +177,12 @@ void Optimize() {
 			TimePass::Error::GetLastErrmsg());
 		return ;
 	}
-    if (false == numbers.Optimize()) {
-        printf("errno = %d, errmsg = %s\n", TimePass::Error::GetLastErrno(), 
+    	if (false == numbers.Optimize()) {
+        	printf("errno = %d, errmsg = %s\n", TimePass::Error::GetLastErrno(), 
 			TimePass::Error::GetLastErrmsg());
 		return ; 
-    }
+    	}
+    	numbers.DetachShm();
 }
 
 int main(int argc, char** argv) {
