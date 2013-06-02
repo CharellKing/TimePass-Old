@@ -29,9 +29,9 @@ public:
         p_head_->size = 0;
         p_head_->free_stack = -1;
 		
-		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
+	    p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
 		
-		p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+	    p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
         return true;    
     }
     
@@ -43,7 +43,7 @@ public:
         }
 		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
 		
-		p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+	    p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
 		
         return true;
     }
