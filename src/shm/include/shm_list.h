@@ -28,10 +28,17 @@ public:
         p_head_->capacity = capacity;
         p_head_->size = 0;
         p_head_->free_stack = -1;
+<<<<<<< HEAD
         
         p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
         
         p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+=======
+		
+	    p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
+		
+	    p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+>>>>>>> 7e38cf9e2e17983e7d3450860991cc8669d4b3d3
         return true;    
     }
     
@@ -41,10 +48,17 @@ public:
         if (NULL == p_head_) {
             return false;
         }
+<<<<<<< HEAD
         p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
         
         p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
         
+=======
+		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
+		
+	    p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+		
+>>>>>>> 7e38cf9e2e17983e7d3450860991cc8669d4b3d3
         return true;
     }
     

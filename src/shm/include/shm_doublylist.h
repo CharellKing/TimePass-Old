@@ -27,11 +27,11 @@ public:
         p_head_->tail = -1;
         p_head_->capacity = capacity;
         p_head_->size = 0;
-		p_head_->free_stack = -1;
-		
-		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
-		
-		p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+        p_head_->free_stack = -1;
+        
+        p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
+        
+        p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
         return true;    
     }
     
@@ -41,9 +41,9 @@ public:
         if (NULL == p_head_) {
             return false;
         }
-		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
-		
-		p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
+        p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
+        
+        p_addr_ = (ListNode<T>*)((char*)p_ext_ + sizeof(EXTEND));
         return true;
     }
     
@@ -82,10 +82,10 @@ public:
         memcpy(p_ext_, &ext, sizeof(EXTEND));
     }
     
-	const EXTEND* GetExtend()const {
-		return p_ext_;
-	}
-	
+    const EXTEND* GetExtend()const {
+        return p_ext_;
+    }
+    
     //获取头结点
     ListNode<T>* HeadNode() {
         return AT(p_addr_, p_head_->head);
@@ -175,19 +175,18 @@ public:
     void Clear() {
         CommonList<T, EXTEND>::Clear(p_head_);
     }
-	
-    //
+    
     //将链表以图形的形式显示，转化为dot language 识别的脚本
-	bool ToDot(const std::string& filename, const std::string (*Label)(const T& value) ) const{
-		std::ofstream out;
-		char t_label[500];
-		out.open(filename.c_str());
-		out.write("digraph G {\n", strlen("digraph G {\n"));
-		CommonList<T, EXTEND>::DrawList(p_addr_, p_head_->head, out, Label);
-		out.write("}\n", strlen("}\n"));
-		out.close();
-		return true;
-	}
+    bool ToDot(const std::string& filename, const std::string (*Label)(const T& value) ) const{
+        std::ofstream out;
+        char t_label[500];
+        out.open(filename.c_str());
+        out.write("digraph G {\n", strlen("digraph G {\n"));
+        CommonList<T, EXTEND>::DrawList(p_addr_, p_head_->head, out, Label);
+        out.write("}\n", strlen("}\n"));
+        out.close();
+        return true;
+    }
 
     //共享内存总占用空间
     off_t TotalSize()const {
@@ -204,15 +203,15 @@ public:
         return CommonList<T, EXTEND>::Optimize(name_, p_addr_, p_head_);
     }
 
-	//提交共享内存所作的改变
-	bool Commit(bool is_sync) {
-		return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
-	}
-	
+    //提交共享内存所作的改变
+    bool Commit(bool is_sync) {
+        return ShmBase::Commit((char*)p_head_, TotalSize(), is_sync);
+    }
+    
 private:
     char name_[256];
     ListHead* p_head_;
-	EXTEND* p_ext_;
+    EXTEND* p_ext_;
     ListNode<T>* p_addr_;
 
 };
