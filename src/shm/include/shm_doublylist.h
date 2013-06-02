@@ -27,7 +27,7 @@ public:
         p_head_->tail = -1;
         p_head_->capacity = capacity;
         p_head_->size = 0;
-        p_head_->free_stack = -1;
+		p_head_->free_stack = -1;
 		
 		p_ext_ = (EXTEND*)((char*)p_head_ + sizeof(ListHead));
 		
