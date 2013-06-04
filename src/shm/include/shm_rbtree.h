@@ -283,9 +283,9 @@ public:
         return count;
     }
     
-    //优化链表
+    //优化RB-TREE
     static bool Optimize(const char* name, RbtreeNode<T>* p_addr, RbtreeHead* p_head) {
-        //获取缩减后的链表尺寸
+        //获取缩减后的RB-TREE尺寸
         off_t new_capacity = ShmConfig::ReduceSize(p_head->capacity, p_head->size);
         if (new_capacity == p_head->capacity) {
             return true;
