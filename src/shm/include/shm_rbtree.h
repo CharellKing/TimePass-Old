@@ -183,37 +183,37 @@ public:
         
     //将红黑树转化为由dot language识别的脚本
     static bool ToDot(const RbtreeHead* p_head, const RbtreeNode<T>* p_addr, const std::string& filename, const std::string (*ToString)(const T& value) ) {
-		std::ofstream out;
+        std::ofstream out;
         std::ostringstream oss;
-		out.open(filename.c_str());
+        out.open(filename.c_str());
         oss << "digraph G {\n";
-		Traverse(p_addr, p_head->root, oss, out, ToString);
+        Traverse(p_addr, p_head->root, oss, out, ToString);
         oss << "}\n";
         out << oss.str();
-		out.close();
-		return true;
-	}
+        out.close();
+        return true;
+    }
 
     //递归遍历整颗红黑树
-	static void Traverse(const RbtreeNode<T>* p_addr, off_t root, std::ostringstream& oss, std::ofstream& out, const std::string (*ToString)(const T& data)){
-		if (-1 != root) {
+    static void Traverse(const RbtreeNode<T>* p_addr, off_t root, std::ostringstream& oss, std::ofstream& out, const std::string (*ToString)(const T& data)){
+        if (-1 != root) {
             const RbtreeNode<T>* p_root = p_addr + root;
-			std::string label = ToString(p_root->data);
+            std::string label = ToString(p_root->data);
 
             oss << label << "[color=" << ('R' == p_root->color ? "red":"black") << ",style=filled, fontcolor=green];\n";
 
-			const RbtreeNode<T>* p_child = AT(p_addr, p_root->left);
-			if (p_child) {
+            const RbtreeNode<T>* p_child = AT(p_addr, p_root->left);
+            if (p_child) {
                 oss << label << "->" << ToString(p_child->data) << ";\n";
-				Traverse(p_addr, p_root->left, oss, out, ToString);
-			} 
-			p_child = AT(p_addr, p_root->right);
-			if (p_child) {
+                Traverse(p_addr, p_root->left, oss, out, ToString);
+            } 
+            p_child = AT(p_addr, p_root->right);
+            if (p_child) {
                 oss << label << "->" << ToString(p_child->data) << ";\n";
-				Traverse(p_addr, p_root->right, oss, out, ToString);
-			}
-		} 
-	}
+                Traverse(p_addr, p_root->right, oss, out, ToString);
+            }
+        } 
+    }
 
     
     //<data的上限
@@ -906,16 +906,16 @@ private:
     
     //获取空闲的节点
     static RbtreeNode<T>* GetFreeNode(const char* name, RbtreeHead* p_head, RbtreeNode<T>* p_addr, off_t& freenode, bool is_expand) {
-		RbtreeNode<T>* p_freenode = NULL;
+        RbtreeNode<T>* p_freenode = NULL;
         freenode = -1;
         if (-1 != p_head->free_stack) {//回收站非空
             freenode = p_head->free_stack;
-			p_freenode = p_addr + p_head->free_stack;
+            p_freenode = p_addr + p_head->free_stack;
             p_head->free_stack = p_freenode->left;
         } else {
-			if (p_head->size >= p_head->capacity) {//容量不足
+            if (p_head->size >= p_head->capacity) {//容量不足
                 if (is_expand) {
-    				off_t add_size = ShmConfig::ExpandSize(p_head->size);
+                    off_t add_size = ShmConfig::ExpandSize(p_head->size);
                     if (add_size <= 0){
                         return NULL;
                     }
@@ -925,15 +925,15 @@ private:
                         p_head->capacity = new_capacity;
                     } else {
                         return NULL;
-                    }	
-    			} else {
+                    }   
+                } else {
                     Error::SetErrno(NO_SPACE_SHORTAGE);
                     Error::SetErrmsg(MSG_SPACE_SHORTAGE);
                     return NULL;
                 }
             }
             freenode = p_head->size;
-			p_freenode = p_addr + freenode;
+            p_freenode = p_addr + freenode;
         }
         return p_freenode;
     }
